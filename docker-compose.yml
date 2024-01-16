@@ -1,0 +1,18 @@
+services:
+  webapp:
+    build: .
+    environment:
+      DB_PASSWORD: "12345678"
+      DB_USER: "realworld"
+      DB_URL: "jdbc:postgresql://db:5432/db"
+      DB_DRIVER: "org.postgresql.Driver"
+    depends_on: 
+    - db
+    expose:
+    - "8080"
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "12345678"
+      POSTGRES_USER: "realworld"
+      POSTGRES_DB: "db" 
