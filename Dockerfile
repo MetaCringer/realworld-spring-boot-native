@@ -28,7 +28,13 @@ sdk use java $JAVA_VERSION && \
 
 
 FROM redhat/ubi8
-USER 1001:1001
-COPY --from=builder --chown=1001:1001 /app/build/native/nativeCompile/realworld /app/
+RUN dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
+dnf install -y postgresql15 java-11-openjdk && \
+curl https://dlcdn.apache.org/kafka/3.6.1/kafka_2.13-3.6.1.tgz -o kafka.tgz && \
+tar -xzf kafka.tgz
+
+#USER 1001:1001
+#COPY --from=builder --chown=1001:1001 /app/build/native/nativeCompile/realworld /app/
+COPY --from=builder /app/build/native/nativeCompile/realworld /app/
 WORKDIR /app
 ENTRYPOINT ["/app/realworld"]
