@@ -1,11 +1,13 @@
 pipeline {
     agent any
-
+    environment {
+        docker_registry = ""
+    }
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh './gradlew build'
+                sh 'docker build -t registry:5000/java-app .'
             }
         }
         stage('Test') {
@@ -13,9 +15,10 @@ pipeline {
                 echo 'Testing..'
             }
         }
-        stage('Deploy') {
+        stage('Push') {
             steps {
-                echo 'Deploying....'
+                echo 'Push....'
+                sh 'docker push registry:5000/java-app'
             }
         }
     }
