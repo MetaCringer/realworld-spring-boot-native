@@ -9,8 +9,10 @@ pipeline {
         stage('Clone repo') {
             steps {
                 git "${REPO}"
-                env.VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_DAY}.${BUILDS_TODAY}')
-                currentBuild.displayName = "${VERSION_NUMBER}"
+                script{
+                    env.VERSION_NUMBER = VersionNumber(versionNumberString: '${BUILD_YEAR}.${BUILD_MONTH}.${BUILD_DAY}.${BUILDS_TODAY}')
+                    currentBuild.displayName = "${VERSION_NUMBER}"
+                }
             }
         }
         stage('Build') {
