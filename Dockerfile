@@ -1,4 +1,4 @@
-FROM debian as builder
+FROM debian:12.6 as builder
 ARG JAVA_VERSION=22.3.2.r17-nik
 
 SHELL [ "/bin/bash", "-c" ]
@@ -32,7 +32,7 @@ npm install npx newman@6.1.0 && \
 # ./gradlew nativeCompile
 
 
-FROM debian
+FROM debian:12.6
 RUN apt update && apt install -y postgresql-client openjdk-17-jdk
 
 
